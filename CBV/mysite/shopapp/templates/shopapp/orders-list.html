@@ -11,21 +11,18 @@
       {% for order in orders %}
         <div>
           <p>Order by {% firstof order.user.first_name order.user.username %}</p>
-          <p>Promocode: <code>{{ order.promocode }}</code></p>
-          <p>Delivery address: {{ order.delivery_address }}</p>
+          <p>Promocode <code>{{ order.promocode }}</code></p>
+          <p>Delivery address : {{ order.delivers_adress }}</p>
           <div>
             Product in order:
             <ul>
-              {% for product in order.products.all %}
-                <li>{{ product.name }} for ${{ product.price }}</li>
+              {% for order in order.products.all %}
+                <l1>{{ product.name }} for ${{ product.price }}</l1>
               {% endfor %}
-
             </ul>
           </div>
-
         </div>
       {% endfor %}
-
     </div>
   {% else %}
     <h3>No orders yet</h3>

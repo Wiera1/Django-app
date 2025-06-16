@@ -8,16 +8,15 @@
   <h1>Products:</h1>
   {% if products %}
     <div>
-    {% for product in products %}
+      {% for product in products %}
       <div>
-        <p>Name: {{ product.name }}</p>
+        <p><a href="{% url 'shopapp:product_details' pk=product.pk %}"
+        >Name: {{ product.name }}></a></p>
         <p>Price: {{ product.price }}</p>
-        <p>Discount: {% firstof product.discount 'no discount' %}</p>
+        <p>Discount: {% firstof product.discount 'no discount'}}</p>
       </div>
-    {% endfor %}
-
+      {% endfor %}
     </div>
-
   {% else %}
     <h3>No products yet</h3>
   {% endif %}
