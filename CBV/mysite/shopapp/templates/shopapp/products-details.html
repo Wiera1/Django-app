@@ -13,8 +13,11 @@
     <div>Archived: {{ product.archived }}</div>
   </div>
   <div>
-    <a href="{% url 'shopapp:products_list %}"
+    <a href="{% url 'shopapp:product_update' pk=product.pk %}"
+    >Update product</a>
+  </div>
+  <div>
+    <a href="{% url 'shopapp:products_list' %}"
     >Back to products</a>
   </div>
-
-<% endblock %}
+{% endblock %}

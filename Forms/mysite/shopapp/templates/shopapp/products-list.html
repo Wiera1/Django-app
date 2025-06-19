@@ -12,7 +12,7 @@
       <div>
         <p>Name: {{ product.name }}</p>
         <p>Price: {{ product.price }}</p>
-        <p>Discount: {% firstof product.discount 'no discount' %}</p>
+        <p>Discount: {% if product.discount > 0 %}{{ product.discount }}%{% else %}no discount{% endif %}</p>
       </div>
     {% endfor %}
 
