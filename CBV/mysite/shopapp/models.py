@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
 class Product(models.Model):
     class Meta:
-        ordering = ["name", "price"]
+        ordering = ['name', 'price']
+        # db_table = 'tech_products'
+        # verbose_name_plural = 'products'
 
     name = models.CharField(max_length=100)
     description = models.TextField(null=False, blank=True)
@@ -13,8 +14,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"Product(pk={self.pk}, name={self.name!r})"
+    # @property
+    # def description_short(self) -> str:
+    #     if len(self.description) < 48:
+    #         return self.description
+    #     return self.description[:48] + '...'
+
+    def __str__(self) -> str:
+        return f'Product(pk={self.pk}, name={self.name!r})'
 
 
 class Order(models.Model):
