@@ -17,6 +17,10 @@
     >Update product</a>
   </div>
   <div>
+    <a href="{% url 'shopapp:product_delete' pk=product.pk %}"
+    >Archive product</a>
+  </div>
+  <div>
     <a href="{% url 'shopapp:products_list' %}"
     >Back to products</a>
   </div>

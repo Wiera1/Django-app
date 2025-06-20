@@ -14,7 +14,7 @@
     </form>
   </div>
   <div>
-    <a href="{% url 'shopapp:products_list' pk=object.pk %}"
+    <a href="{% url 'shopapp:product_details' pk=object.pk %}"
     >Back to products #{{ object.pk }}</a>
   </div>
 {% endblock %}
