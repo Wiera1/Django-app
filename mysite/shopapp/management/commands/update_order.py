@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         order = Order.objects.first()
         if not order:
-            self.stdout.write('no order found')
+            self.stdout.write("no order found")
             return
 
         products = Product.objects.all()
@@ -19,6 +19,6 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f'Successfule added products {order.products.all()} to order {order}'
+                f"Successfully added products {order.products.all()} to order {order}"
             )
         )
