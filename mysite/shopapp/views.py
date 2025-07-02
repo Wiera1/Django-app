@@ -54,7 +54,7 @@ class ProductsListView(ListView):
     queryset = Product.objects.filter(archived=False)
 
 
-class ProductCreateView(UserPassesTestMixin, CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView): #UserPassesTestMixin
     def test_func(self):
         # return self.request.user.groups.filter(name="secret-group").exsists()
         return self.request.user.is_superuser
