@@ -14,11 +14,11 @@ class Command(BaseCommand):
             codename="view_logentry"
         )
         # Добавление разрешения в группе
-        group.permossions.add(permissions_profile)
+        group.permissions.add(permissions_profile)
         # Присоединение пользователя к группе
         user.groups.add(group)
         # Связать пользователя напрямую с разрешением
-        user.user_permission.add(permission_logentry)
+        user.user_permissions.add(permission_logentry)
 
         group.save()
         user.save()

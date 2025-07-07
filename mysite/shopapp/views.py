@@ -54,7 +54,7 @@ class ProductsListView(ListView):
     queryset = Product.objects.filter(archived=False)
 
 
-class ProductCreateView(PermissionRequiredMixin, CreateView): #UserPassesTestMixin
+class ProductCreateView(UserPassesTestMixin, CreateView):
     def test_func(self):
         # return self.request.user.groups.filter(name="secret-group").exsists()
         return self.request.user.is_superuser
@@ -88,6 +88,18 @@ class ProductDeleteView(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
+class OrdersListView(LoginRequiredMixin, ListView):
+    queryset = (
+        Order.objects
+        .select_related("user")
+        .prefetch_related("products")
+    )
+
+    # template_name = 'shopapp/order_list.html'
+    # model = Order #Product
+    # context_object_name = "orders" # "products"
+
+
 class OrderDetailView(PermissionRequiredMixin, DetailView):
     permission_required = "shopapp.view_order"
     queryset = (
@@ -95,9 +107,3 @@ class OrderDetailView(PermissionRequiredMixin, DetailView):
         select_related('user').
         prefetch_related('products')
     )
-
-
-class OrdersListView(LoginRequiredMixin, ListView):
-    template_name = 'shopapp/order_list.html'
-    model = Order #Product
-    context_object_name = "orders" # "products"
