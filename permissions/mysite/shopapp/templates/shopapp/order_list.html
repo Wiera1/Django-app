@@ -10,11 +10,11 @@
     <div>
       {% for order in object_list %}
         <div>
-          <p><a href="{% url 'shopapp:order_details' pk=order.pk %}"
+          <p><a href="{% url 'shopapp:orders_details' pk=order.pk %}"
           >Details #{{ order.pk }}</a></p>
           <p>Order by {% firstof order.user.first_name order.user.username %}</p>
-          <p>Promocode: <code>{{ order.promocode }}</code></p>
-          <p>Delivery address: {{ order.delivery_address }}</p>
+          <p>Promocode <code>{{ order.promocode }}</code></p>
+          <p>Delivery address : {{ order.delivers_address }}</p>
           <div>
             Product in order:
             <ul>
@@ -22,12 +22,12 @@
                 <li>{{ product.name }} for ${{ product.price }}</li>
               {% endfor %}
 
+
             </ul>
           </div>
 
         </div>
       {% endfor %}
-
     </div>
   {% else %}
     <h3>No orders yet</h3>
