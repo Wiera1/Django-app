@@ -54,21 +54,34 @@ class ProductsListView(ListView):
     queryset = Product.objects.filter(archived=False)
 
 
-class ProductCreateView(UserPassesTestMixin, CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
     def test_func(self):
         # return self.request.user.groups.filter(name="secret-group").exsists()
         return self.request.user.is_superuser
 
     model = Product
-    fields = "name", "price", "description", "discount"
+    fields = ("name", "price", "description", "discount")
+    permission_required = "shopapp.add_product"
+    template_name = "shopapp/product_form.html"
     success_url = reverse_lazy("shopapp:products_list")
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = "name", "price", "description", "discount"
+    fields = ("name", "price", "description", "discount")
     template_name_suffix = "_update_form"
     success_url = reverse_lazy("shopapp:products_list")
+
+    def test_func(self):
+        product = self.get.object()
+        user = self.request.user
+        if user.is_superuser:
+            return True
+        return user.has_perm("shopapp.change_product") and product.created_by == user
 
     def get_success(self):
         return reverse(
