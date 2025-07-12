@@ -54,7 +54,7 @@ class ProductsListView(ListView):
     queryset = Product.objects.filter(archived=False)
 
 
-class ProductCreateView(PermissionRequiredMixin, CreateView):
+class ProductCreateView(CreateView):
     def test_func(self):
         # return self.request.user.groups.filter(name="secret-group").exsists()
         return self.request.user.is_superuser
@@ -70,7 +70,7 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UserPassesTestMixin, UpdateView):
     model = Product
     fields = ("name", "price", "description", "discount")
     template_name_suffix = "_update_form"
