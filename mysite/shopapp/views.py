@@ -36,7 +36,7 @@ class GroupListView(View):
 
     def post(self, request: HttpRequest):
         form = GroupForm(request.POST)
-        if form .is_valid():
+        if form.is_valid():
             form.save()
 
         return redirect(request.path)
@@ -130,8 +130,44 @@ class ProductsDataExportView(View):
                 "pk": product.pk,
                 "name": product.name,
                 "price": product.price,
-                "archives": product.archived,
+                "archived": product.archived,
             }
             for product in products
         ]
         return JsonResponse({"products": products_data})
+
+
+class InformationExtraction(View):
+    def info_valid(self, request: HttpRequest) ->JsonResponse:
+        products = Product.objects.order_by("pk").all()
+        products_data = [
+            {
+                "pk": product.pk,
+                "address": product.address,
+                "name": product.name,
+                "price": product.price,
+                "archived": product.archived,
+            }
+            for product in products
+        ]
+        return JsonResponse({"products": products_data})
+
+
+class OrdersExportView(UserPassesTestMixin, LoginRequiredMixin, View):
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get(self, request, *args, **kwargs):
+        orders = Order.objects.prefetch_related("products").all()
+        data = []
+
+        for order in orders:
+            data.append({
+                "id": order.pk,
+                "address": order.address,
+                "promo_code": order.promo_code,
+                "user_id": order.user_id,
+                "product_ids": list(order.products.values_list("pk", flat=True)),
+            })
+
+        return JsonResponse({"orders": data})
