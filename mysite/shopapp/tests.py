@@ -102,6 +102,8 @@ class OrdersListViewTestCase(TestCase):
     #     cls.user.delete()
 
     def setUp(self) -> None:
+        super().setUp()
+        self.user = self.__class__.user
         self.client.force_login(self.user)
 
     def test_orders_view(self):
@@ -119,6 +121,7 @@ class OrderDetailViewTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.credentials = dict(username="bob_test", password="qwerty")
         cls.user = User.objects.create_user(**cls.credentials)
 
@@ -136,7 +139,7 @@ class OrderDetailViewTestCase(TestCase):
 
 
 class ProductsExportViewTestCase(TestCase):
-    fixture = [
+    fixtures = [
         'products-fixture.json',
     ]
 
@@ -179,10 +182,11 @@ class OrdersExportTestCase(TestCase):
         super().tearDownClass()
 
     def setUp(self):
+        super().setUp()
         self.client.force_login(self.staff_user)
 
     def test_order_export(self):
-        url = reverse("shopapp:order_export")
+        url = reverse("shopapp:order_list")
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -191,7 +195,7 @@ class OrdersExportTestCase(TestCase):
         self.assertIn("orders", json_data)
         orders = json_data["orders"]
 
-        self.assertIn(orders, list)
+        self.assertIsInstance(orders, list)
 
         order = orders[0]
         self.assertIn("id", order)
@@ -199,4 +203,4 @@ class OrdersExportTestCase(TestCase):
         self.assertIn("promo_code", order)
         self.assertIn("user_id", order)
         self.assertIn("product_ids", order)
-        self.assertIsInstance(order["propduct_ids"], list)
+        self.assertIsInstance(order["product_ids"], list)
