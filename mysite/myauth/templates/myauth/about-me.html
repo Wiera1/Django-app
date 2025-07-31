@@ -18,4 +18,15 @@
   {% else %}
     <h2>User is anonymous</h2>
   {% endif %}
+  {%if profile.avatar %}
+    <img src="{{ profile.avatar.url }}" alt="Avatar" width="150">
+  {% else %}
+    <p>No avatar uploaded.</p>
+  {% endif %}
+  <h2>Change avatar</h2>
+  <form action="post" enctype="multipart/form-data/">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
 {% endblock %}

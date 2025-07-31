@@ -1,39 +1,30 @@
 {% extends 'shopapp/base.html' %}
 
 {% block title %}
-  Products list
+  Product list
 {% endblock %}
 
 {% block body %}
   <h1>Products:</h1>
-
-  {% if perms.shopapp.add_product %}
-    <a href="{% url 'shopapp:product_create' %}">Создать продукт</a>
-  {% endif %}
-
   {% if products %}
-  <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; margin-top: 20 px;">
-    <thead style="background-collor: #f2f2f2;">
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Discount</th>
-        <th>Created by</th>
-      </tr>
-    </thead>
-    <tbody>
+    <div>
       {% for product in products %}
-        <tr>
-          <td>{{ product.name }}</td>
-          <td>{{ product.price }}</td>
-          <td>{% firstof product.discount 'no discount' %}</td>
-          <td>{{ product.created_by.username}}</td>
-        </tr>
+        <div>
+          <p><a href="{% url 'shopapp:products_details' pk=product.pk %}"
+          >Name: {{ product.name }}</a></p>
+          <p>Price: {{ product.price }}</p>
+          <p>Discount: {% firstof product.discount "no discount" %}</p>
+        </div>
       {% endfor %}
-    </tbody>
-  </table>
+
+    </div>
+
   {% else %}
     <h3>No products yet</h3>
   {% endif %}
-{% endblock %}
 
+  <div>
+    <a href="{% url 'shopapp:product_create' %}"
+    >Create a new product</a>
+  </div>
+{% endblock %}

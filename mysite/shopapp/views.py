@@ -7,8 +7,10 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from .forms import GroupForm
-from .models import Product, Order
+# from .forms import GroupForm
+
+from .forms import ProductForm
+from .models import Product, Order, ProductImage
 
 
 class ShopIndexView(View):
@@ -34,17 +36,18 @@ class GroupListView(View):
         return render(request, 'shopapp/groups-list.html', context=context)
 
 
-    def post(self, request: HttpRequest):
-        form = GroupForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-        return redirect(request.path)
+    # def post(self, request: HttpRequest):
+    #     form = GroupForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #
+    #     return redirect(request.path)
 
 
 class ProductDetailsView(DetailView):
     template_name = "shopapp/products-details.html"
-    model = Product
+    # model = Product
+    queryset = Product.objects.prefetch_related("images")
     context_object_name = "product"
 
 
@@ -55,39 +58,52 @@ class ProductsListView(ListView):
 
 
 class ProductCreateView(CreateView):
-    def test_func(self):
-        # return self.request.user.groups.filter(name="secret-group").exsists()
-        return self.request.user.is_superuser
-
     model = Product
-    fields = ("name", "price", "description", "discount")
-    permission_required = "shopapp.add_product"
-    template_name = "shopapp/product_form.html"
-    success_url = reverse_lazy("shopapp:products_list")
+    fields = ("name", "price", "description", "discount", "preview")
+    permission_required = reverse_lazy("shopapp:products_list")
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+    # def test_func(self):
+        # return self.request.user.groups.filter(name="secret-group").exists()
+        # return self.request.user.is_superuser
 
 
-class ProductUpdateView(UserPassesTestMixin, UpdateView):
+    # template_name = "shopapp/product_form.html"
+    # success_url = reverse_lazy("shopapp:products_list")
+    #
+    # def form_valid(self, form):
+    #     form.instance.created_by = self.request.user
+    #     return super().form_valid(form)
+
+
+class ProductUpdateView(UpdateView):
     model = Product
-    fields = ("name", "price", "description", "discount")
+    # fields = ("name", "price", "description", "discount", "preview")
     template_name_suffix = "_update_form"
-    success_url = reverse_lazy("shopapp:products_list")
+    form_class = ProductForm
+    # success_url = reverse_lazy("shopapp:products_list")
 
-    def test_func(self):
-        product = self.get.object()
-        user = self.request.user
-        if user.is_superuser:
-            return True
-        return user.has_perm("shopapp.change_product") and product.created_by == user
+    # def test_func(self):
+    #     product = self.get_object()
+    #     user = self.request.user
+    #     if user.is_superuser:
+    #         return True
+    #     return user.has_perm("shopapp.change_product") and product.created_by == user
 
-    def get_success(self):
+    def get_success_url(self):
         return reverse(
-            "shopapp:product_details",
+            "shopapp:products_details",
             kwargs={"pk": self.object.pk},
         )
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        for image in form.files.getlist("images"):
+            ProductImage.objects.create(
+                product=self.object,
+                image=image,
+            )
+
+        return response
 
 
 class ProductDeleteView(DeleteView):
@@ -95,7 +111,7 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy("shopapp:products_list")
 
     def form_valid(self, form):
-        success_url = self. get_success_url()
+        success_url = self.get_success_url()
         self.object.archived = True
         self.object.save()
         return HttpResponseRedirect(success_url)
@@ -138,12 +154,12 @@ class ProductsDataExportView(View):
 
 
 class InformationExtraction(View):
-    def info_valid(self, request: HttpRequest) ->JsonResponse:
+    def get(self, request: HttpRequest) -> JsonResponse:
         products = Product.objects.order_by("pk").all()
         products_data = [
             {
                 "pk": product.pk,
-                "address": product.address,
+                "address": getattr(product, 'address', None),
                 "name": product.name,
                 "price": product.price,
                 "archived": product.archived,
@@ -164,9 +180,9 @@ class OrdersExportView(UserPassesTestMixin, LoginRequiredMixin, View):
         for order in orders:
             data.append({
                 "id": order.pk,
-                "address": order.address,
-                "promo_code": order.promo_code,
-                "user_id": order.user_id,
+                "address": order.delivery_address,
+                "promo_code": order.promocode,
+                "user_id": order.user,
                 "product_ids": list(order.products.values_list("pk", flat=True)),
             })
 

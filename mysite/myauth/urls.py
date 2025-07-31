@@ -1,5 +1,6 @@
 from django.contrib.auth.views import LoginView
 from django.urls import path
+from . import views
 
 from myauth.views import (
     get_cookie_view,
@@ -36,4 +37,7 @@ urlpatterns = [
     path("session/set/", set_session_view, name="session-set"),
 
     path("foo-bar/", FooBarView.as_view(), name="foo-bar"),
+
+    path('users/', views.users_list, name='user-list'),
+    path('users/<intLuser_id>/', views.user_profile, name='user-profile'),
 ]

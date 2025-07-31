@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Profile: {{ user_obj.username }}</h1>
+
+  {% if profile.avatar %}
+    <img src="{{ profile.avatar.url }}" alt="Avatar" width="150">
+  {% else %}
+    <p>No avatar uploaded.</p>
+  {% endelif %}
+
+  {% if can_edit %}
+    <h2>Edit avatar</h2>
+    <form action="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save</button>
+    </form>
+  {% else %}
+    <p>You cannot edit this profile.</p>
+  {% endif %}
+{% endblock %}
