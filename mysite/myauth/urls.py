@@ -39,5 +39,5 @@ urlpatterns = [
     path("foo-bar/", FooBarView.as_view(), name="foo-bar"),
 
     path('users/', views.users_list, name='user-list'),
-    path('users/<intLuser_id>/', views.user_profile, name='user-profile'),
+    path('users/<int:user_id>/', views.user_profile, name='user-profile'),
 ]

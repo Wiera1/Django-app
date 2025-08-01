@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse, JsonResponse
@@ -7,14 +8,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.http import HttpResponseForbidden
 
 from .forms import ProfileForm
 from .models import Profile
 
-class AboutMeView(TemplateView):
+class AboutMeView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    field = ('avatar',)
     template_name = "myauth/about-me.html"
+    success_url = reverse_lazy('myauth:about_me.html')
+
+    def get_object(self, queryset = None):
+        return self.request.user.profile
+
 
 
 class RegisterView(CreateView):
