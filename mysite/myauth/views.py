@@ -14,6 +14,12 @@ from django.http import HttpResponseForbidden
 from .forms import ProfileForm
 from .models import Profile
 
+
+class HelloView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return HttpResponse('<h1>Hello World!</h1>')
+
+
 class AboutMeView(LoginRequiredMixin, UpdateView):
     model = Profile
     field = ('avatar',)
