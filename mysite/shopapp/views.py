@@ -7,10 +7,37 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-# from .forms import GroupForm
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .forms import ProductForm
 from .models import Product, Order, ProductImage
+from .serializers import ProductSerializers
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializers
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+    search_fields = ["name", "description"]
+    filterset_fields = [
+        "name",
+        "description",
+        "price",
+        "discount",
+        "archived",
+    ]
+    ordering_fields = [
+        "name",
+        "price",
+        "description",
+
+    ]
 
 
 class ShopIndexView(View):
@@ -27,13 +54,13 @@ class ShopIndexView(View):
         return render(request, 'shopapp/shop-index.html', context=context)
 
 
-class GroupListView(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
-        context = {
-            "form": GroupForm(),
-            "groups": Group.objects.prefetch_related('permissions').all(),
-        }
-        return render(request, 'shopapp/groups-list.html', context=context)
+# class GroupListView(View):
+#     def get(self, request: HttpRequest) -> HttpResponse:
+#         context = {
+#             "form": GroupForm(),
+#             "groups": Group.objects.prefetch_related('permissions').all(),
+#         }
+#         return render(request, 'shopapp/groups-list.html', context=context)
 
 
     # def post(self, request: HttpRequest):
