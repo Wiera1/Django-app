@@ -23,11 +23,4 @@ class OrderSerializers(serializers.ModelSerializer):
         model = Order
         fields = (
             "pk",
-            "name",
-            "description",
-            "price",
-            "discount",
-            "created_at",
-            "archived",
-            "preview",
         )

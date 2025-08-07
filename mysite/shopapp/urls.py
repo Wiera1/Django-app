@@ -15,14 +15,14 @@ from .views import (
     ProductsDataExportView,
     OrdersExportView,
     ProductViewSet,
-    OrderViewSet,
+    OrdersViewSet,
 )
 
 app_name = 'shopapp'
 
 routers = DefaultRouter()
 routers.register("products", ProductViewSet)
-routers.register("orders", OrderViewSet)
+routers.register("orders", OrdersViewSet)
 
 
 urlpatterns = [

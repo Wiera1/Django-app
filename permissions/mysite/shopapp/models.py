@@ -2,6 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+def product_preview_directory_path(instance: "Product", filename: str) -> str:
+    return "products/product_{pk}/preview/{filename}".format(
+        pk=instance.pk,
+        filename=filename,
+    )
+
+
 class Product(models.Model):
     class Meta:
         ordering = ["name", "price"]
