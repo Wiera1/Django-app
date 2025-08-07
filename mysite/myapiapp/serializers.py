@@ -5,3 +5,9 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ["pk", "name"]
+
+
+class OrderSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ["pk", "name"]

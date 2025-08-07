@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .forms import ProductForm
 from .models import Product, Order, ProductImage
-from .serializers import ProductSerializers
+from .serializers import ProductSerializers, OrderSerializers
 
 
 class ProductViewSet(ModelViewSet):
@@ -38,6 +38,11 @@ class ProductViewSet(ModelViewSet):
         "description",
 
     ]
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializers
 
 
 class ShopIndexView(View):
