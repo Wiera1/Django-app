@@ -182,6 +182,7 @@ class OrdersListView(LoginRequiredMixin, ListView):
         Order.objects
         .select_related("user")
         .prefetch_related("products")
+        .all()
     )
 
     # template_name = 'shopapp/order_list.html'
