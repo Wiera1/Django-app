@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>
-      Title
+      Список статей
     </title>
 </head>
 <body>
-{% block body %}
-  {% if article_list %}
-    <div>
-      {% for article in article_list %}
-        <div>
-          <p>Article title {{ article.title }}</p>
-          <p>Date publication {{ article.date }}</p>
-          <p>Name author {{ article.name }}</p>
-          <p>Category {{ article.category }}</p>
-          <p>Tags {{ article.tags }}</p>
-        </div>
-    </div>
-{% endblock %}
+    <h1>Статьи</h1>
+    <ul>
+        {% for article in articles %}
+        <li>
+            <h2>{{ article.title }}</h2>
+            <p><strong>Дата публикации:</strong> {{ article.pub_date|date:"d.m.Y H:i" }}</p>
+            <p><strong>Автор:</strong>{{ article.author.name }}</p>
+            <p><strong>Категория:</strong>{{ article.category.name }}</p>
+            <p><strong>Теги:</strong>
+                {% for tag in article.tags.all %}
+                    {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Тегов нет
+                {% endfor %}
+            </p>
+        </li>
+        {% empty %}
+        <li>Статей нет</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

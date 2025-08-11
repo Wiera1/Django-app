@@ -1,14 +1,18 @@
-from typing import Sequence
-
 from django.views.generic import ListView
-
 from blogapp.models import Article
 
 
-class BasedView(ListView):
-    queryset = (
-        Article.objects.
-        select_related().
-        prefetch_related()
-    )
-    titles: Sequence[Article] = Article.objects.defer("content")
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'blogapp/article_list.html'
+    context_object_name = 'articles'
+
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .select_related('author', 'category')
+            .prefetch_related('tags')
+            .defer('content')
+            .order_by('-pub_date')
+        )
