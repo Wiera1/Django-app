@@ -26,3 +26,4 @@ setuptools==80.9.0
 snowballstemmer==3.0.1
 sqlparse==0.5.3
 uritemplate==4.2.0
+djangorestframework

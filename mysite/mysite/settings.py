@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import socket
 from pathlib import Path
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL, MEDIA_URL
 from django.urls import reverse_lazy
+from flask import request
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,8 +32,17 @@ DEBUG = True
 ALLOWED_HOSTS = []
 INTERNAL_IPS = [
     "127.0.0.1",
+    "localhost",
 ]
 
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+for ip in ips:
+    INTERNAL_IPS.append('.'.join(ip.split('.')[:-1] + ['1']))
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,8 +69,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
