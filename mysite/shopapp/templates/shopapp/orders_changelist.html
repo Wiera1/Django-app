@@ -1,0 +1,8 @@
+{% extends 'admin/csv_form.htms %}
+
+{% block object-tools-items %}
+    <li>
+        <a href="{% url 'admin:import_orders' %}">Импорт заказов</a>
+    </li>
+    {{ block.super }}
+{% endblock %}

@@ -1,4 +1,6 @@
 from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from shopapp.sitemap import ShopSitemap
 
 from rest_framework.routers import DefaultRouter
 
@@ -15,7 +17,7 @@ from .views import (
     ProductsDataExportView,
     OrdersExportView,
     ProductViewSet,
-    OrdersViewSet,
+    OrdersViewSet, LatestProductsFeed,
 )
 
 app_name = 'shopapp'
@@ -23,6 +25,11 @@ app_name = 'shopapp'
 routers = DefaultRouter()
 routers.register("products", ProductViewSet)
 routers.register("orders", OrdersViewSet)
+
+
+sitemaps = {
+    'shop': ShopSitemap,
+}
 
 
 urlpatterns = [
@@ -38,4 +45,9 @@ urlpatterns = [
     path('orders_list/', OrdersListView.as_view(), name='orders_list'),
     path('orders_list/<int:pk>/', OrderDetailView.as_view(), name='orders_details'),
     # path("orders-export/", OrdersExportView.as_view(), name="orders_export"),
+    path("sitemap.xml",
+         sitemap,
+         {"sitemaps": sitemaps},
+         name="django.contrib.sitemaps.views.sitemaps"),
+    path('products/latest/feed/', LatestProductsFeed(), name='products_latest_feed'),
 ]

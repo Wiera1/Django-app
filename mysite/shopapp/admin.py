@@ -1,9 +1,15 @@
+import csv
+
 from django.contrib import admin
 from django.db.models import QuerySet
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import path
 
+from .common import save_csv_products
 from .models import Product, Order, ProductImage
 from .admin_mixins import ExportAsCSVMixin
+from .forms import CSVImportForm
 
 
 class OrderInline(admin.TabularInline):
@@ -26,6 +32,7 @@ def mark_unarchived(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin, ExportAsCSVMixin):
+    change_list_template = "shopapp/products_changelist.html"
     actions = [
         mark_archived,
         mark_unarchived,
@@ -63,6 +70,39 @@ class ProductAdmin(admin.ModelAdmin, ExportAsCSVMixin):
             return obj.description
         return obj.description[:48] + "..."
 
+    def import_csv(self, request: HttpRequest) -> HttpResponse:
+        if request.method == "GET":
+            form = CSVImportForm()
+            context = {
+                "form": form,
+            }
+            return render(request, "admin/csv_form.html", context)
+        form = CSVImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            context = {
+                "form": form,
+            }
+            return render(request, "admin/csv_form.html", context, status=400)
+
+        save_csv_products(
+            file=form.files["csv_file"].file,
+            encoding=request.encoding,
+        )
+        self.message_user(request, "Data from CSV was Imported")
+        return redirect("..")
+
+
+    def get_urls(self):
+        urls = super().get_urls()
+        new_urls = [
+            path(
+                "import-products-csv/",
+                self.import_csv,
+                name="import_products_csv",
+            ),
+        ]
+        return new_urls + urls
+
 
 # admin.site.register(Product, ProductAdmin)
 
@@ -84,3 +124,26 @@ class OrderAdmin(admin.ModelAdmin):
 
     def user_verbose(self, obj: Order) -> str:
         return obj.user.first_name or obj.user.username
+
+    change_list_template = "shopapp/orders_changelist.html"
+
+    def import_csv(self, request):
+        if request.method == "POST":
+            form = CSVImportForm(request.POST, request.FILES)
+            if form.is_valid():
+                csv_file = form.cleaned_data["csv_file"]
+                reader = csv.DictReader(csv_file.read().decode("utf-8").splitnes())
+                for row in reader:
+                    order = Order.objects.create()
+                    pass
+                return redirect("..")
+        else:
+            form = CSVImportForm()
+        return render(request, "admin/csv_form.html", {"form": form})
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('import-orders/', self.admin_site.admin_view(self.import_csv), name='import_orders')
+        ]
+        return custom_urls + urls

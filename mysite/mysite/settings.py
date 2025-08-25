@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
 
     'debug_toolbar',
     'rest_framework',
@@ -77,8 +78,7 @@ INSTALLED_APPS = [
     'shopapp.apps.ShopappConfig',
     'myauth.apps.MyauthConfig',
     'myapiapp.apps.MyapiappConfig',
-
-    'blogapp',
+    'blogapp.apps.BlogappConfig',
 ]
 
 MIDDLEWARE = [
