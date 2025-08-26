@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from django.db import models
 from django.urls import reverse
 
@@ -26,12 +27,18 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
     preview = models.ImageField(null=True, blank=True, upload_to=product_preview_directory_path)
+    slug = models.SlugField(max_length=255, unique=False, blank=True)
 
     def __str__(self):
         return f"Product(pk={self.pk}, name={self.name!r})"
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse("product_detail", kwargs={"slug": self.slug})
+        return reverse("shopapp:product_detail", kwargs={"slug": self.slug})
 
 
 def product_images_directory_path(instance: "ProductImage", filename: str) -> str:

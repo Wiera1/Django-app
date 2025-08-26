@@ -4,6 +4,7 @@ from shopapp.sitemap import ShopSitemap
 
 from rest_framework.routers import DefaultRouter
 
+from . import views
 from .views import (
     ShopIndexView,
     # GroupListView,
@@ -17,7 +18,8 @@ from .views import (
     ProductsDataExportView,
     OrdersExportView,
     ProductViewSet,
-    OrdersViewSet, LatestProductsFeed,
+    OrdersViewSet,
+    LatestProductsFeed,
 )
 
 app_name = 'shopapp'
@@ -35,6 +37,7 @@ sitemaps = {
 urlpatterns = [
     path('', ShopIndexView.as_view(), name='index'),
     path("api/", include(routers.urls)),
+    # path('users/', views.UsersListView.as_view(), name='users_list'),
     # path("groups/", GroupListView.as_view(), name="groups_list"),
     path("products/", ProductsListView.as_view(), name="products_list"),
     path("products/export/", ProductsDataExportView.as_view(), name="products-export"),

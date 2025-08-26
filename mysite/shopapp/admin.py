@@ -134,9 +134,18 @@ class OrderAdmin(admin.ModelAdmin):
                 csv_file = form.cleaned_data["csv_file"]
                 reader = csv.DictReader(csv_file.read().decode("utf-8").splitnes())
                 for row in reader:
-                    order = Order.objects.create()
-                    pass
-                return redirect("..")
+                    order = Order.objects.create(
+                        product_id=row['product_id'],
+                        products_name=row['product_name'],
+                        customer_name=row['customer_name'],
+                        order_date=row['order_date'],
+                    )
+                    product_ids_str = row.get('product_ids', '')
+                    product_ids = [int(pid) for pid in product_ids_str.split(';') if pid.strip().isdigit()]
+                    products = Product.objects.filter(id__in=product_ids)
+                    order.products.set(products)
+
+                return redirect("admin:shopapp_order_changelist")
         else:
             form = CSVImportForm()
         return render(request, "admin/csv_form.html", {"form": form})
