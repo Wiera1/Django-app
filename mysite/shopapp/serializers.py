@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from .models import Product, Order
 
 
@@ -23,4 +22,8 @@ class OrderSerializers(serializers.ModelSerializer):
         model = Order
         fields = (
             "pk",
+            "id",
+            "description",
+            "created_at",
+            "status",
         )

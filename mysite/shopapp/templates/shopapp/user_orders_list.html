@@ -1,0 +1,15 @@
+{% load cache %}
+
+<h1>Пользователь {{ owner.username }} выполнил следующий заказ</h1>
+
+{% if orders %}
+    {% cache 600 "user_orders_list" owner.pk %}
+    <ul>
+        {% for order in orders %}
+            <li>Заказ №{{ order.pk }}: {{ order.description }} - дата: {{ order.created_at }}</li>
+        {% endfor %}
+    </ul>
+    {% endcache %}
+{% else %}
+    <p>У пользователя {{ owner.username }} еще нет заказов.</p>
+{% endif %}

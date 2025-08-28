@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps.views import sitemap
 from shopapp.sitemap import ShopSitemap
 
@@ -20,6 +21,8 @@ from .views import (
     ProductViewSet,
     OrdersViewSet,
     LatestProductsFeed,
+    UserOrdersListView,
+    UserOrdersExportView,
 )
 
 app_name = 'shopapp'
@@ -35,6 +38,7 @@ sitemaps = {
 
 
 urlpatterns = [
+    # path('', cache_page(60*3)(ShopIndexView.as_view()), name='index'),
     path('', ShopIndexView.as_view(), name='index'),
     path("api/", include(routers.urls)),
     # path("groups/", GroupListView.as_view(), name="groups_list"),
@@ -53,4 +57,6 @@ urlpatterns = [
          {"sitemaps": sitemaps},
          name="django.contrib.sitemaps.views.sitemaps"),
     path('products/latest/feed/', LatestProductsFeed(), name='products_latest_feed'),
+    path("users/<int:user_id>/orders", UserOrdersListView.as_view(), name="user_orders"),
+    path("users/<int:user_id>/orders/export", UserOrdersExportView.as_view(), name="user_orders"),
 ]
