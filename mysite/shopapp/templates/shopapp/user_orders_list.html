@@ -1,12 +1,24 @@
 {% load cache %}
 
-<h1>Пользователь {{ owner.username }} выполнил следующий заказ</h1>
+<h1>Пользователь {{ owner.username }} выполнил следующий заказ:</h1>
 
 {% if orders %}
-    {% cache 600 "user_orders_list" owner.pk %}
+    {% cache 600 "orders-list" owner.pk %}
     <ul>
         {% for order in orders %}
-            <li>Заказ №{{ order.pk }}: {{ order.description }} - дата: {{ order.created_at }}</li>
+            <li>Заказ №{{ order.pk }}: {{ user.username }} - дата:
+                {{ order.created_at }}
+                Скидка: <code>{{ order.promocode }}</code>
+                Адрес доставки: {{ order.delivery_address }}
+            <div>
+                Товары на заказ:
+                <ul>
+                    {% for product in order.products.all %}
+                        <li>{{ product.name }} for $ {{ product.price }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            </li>
         {% endfor %}
     </ul>
     {% endcache %}

@@ -17,7 +17,7 @@
             Product in order:
             <ul>
               {% for product in order.products.all %}
-                <li>{{ product.name }} for ${{ product.price }}</li>
+                <li>{{ product.name }} for $ {{ product.price }}</li>
               {% endfor %}
 
             </ul>
