@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('shopapp.urls')),
     path('accounts/', include('myauth.urls')),
-    path('myauth/', include('myauth.urls')),
+    # path('myauth/', include('myauth.urls')),
     # path('users/', UserListView.as_view(), name='users_list'),
     path('api/schema/', SpectacularAPIView.as_view(), name="schema"),
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name="swagger-ui"),

@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+from os import getenv
 from pathlib import Path
+import logging.config
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL, MEDIA_URL, CACHE_MIDDLEWARE_SECONDS
 from django.urls import reverse_lazy
@@ -24,21 +26,26 @@ from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASE_DIR = BASE_DIR / "database"
+DATABASE_DIR.mkdir(exist_ok=True)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hvxn%qq=gyw^4*o2lo1#bw0=wh#ux9s8h!=@c608arf_gz3+^7'
+SECRET_KEY = getenv(
+    "DJANGO_SECRET_KEY",
+    'django-insecure-hvxn%qq=gyw^4*o2lo1#bw0=wh#ux9s8h!=@c608arf_gz3+^7',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("DJANGO_DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "127.0.0.1"
-]
+] + getenv("DJANGO_ALLOWED_HOST", "").split(",")
 INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
@@ -122,7 +129,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATABASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -203,32 +210,12 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-LOGGING = {
-    'version': 1,
-    'filters': {
-      'require_debug_true':{
-        '()': 'django.utils.log.RequireDebugTrue',
-      },
-    },
-    'handlers': {
-        'console': {
-          'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        }
-    },
-}
-
 LOGFILE_NAME = BASE_DIR / "log.txt"
 # LOGFILE_SIZE = 400
 LOGFILE_SIZE = 1 * 1024 * 1024
 LOGFILE_COUNT = 3
+
+LOGLEVEL = getenv("DJANGO_LOGLEVEL", "INFO").upper()
 
 
 LOGGING = {
@@ -236,13 +223,17 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-          "format": "%(asctime)s [%(lavelname)s] %(name)s: %(message)s",
+          "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        },
+        "console": {
+            "format": "%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(message)s",
         },
     },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
+            "formatter": "console",
+            "level": LOGLEVEL,
         },
         "logfile": {
             # "class": "logging.handlers.TimeRotatingFileHandler",
@@ -251,13 +242,21 @@ LOGGING = {
             "maxBytes": LOGFILE_SIZE,
             "backupCount": LOGFILE_COUNT,
             "formatter": "verbose",
+            "level": LOGLEVEL,
         },
     },
     "root": {
-        "handler": [
+        "handlers": [
             "console",
             "logfile",
         ],
-        "level": "INFO",
+        "level": LOGLEVEL,
+    },
+    "loggers": {
+        "django.db.backends": {
+            "handlers": ["console", "logfile"],
+            "level": LOGLEVEL,
+            "propagate": False,
+        },
     },
 }

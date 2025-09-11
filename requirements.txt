@@ -14,6 +14,7 @@ flake8-docstrings==1.7.0
 Flask==3.1.1
 Flask-DebugToolbar==0.16.0
 gnu==0.0.1
+gunicorn==23.0.0
 include==0.2.2
 inflection==0.5.1
 itsdangerous==2.2.0
@@ -22,6 +23,7 @@ jsonschema==4.25.0
 jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
 mccabe==0.7.0
+packaging==25.0
 pillow==11.3.0
 pycodestyle==2.14.0
 pydocstyle==6.3.0
