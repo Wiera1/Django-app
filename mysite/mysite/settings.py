@@ -46,6 +46,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "127.0.0.1"
 ] + getenv("DJANGO_ALLOWED_HOST", "").split(",")
+
 INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
@@ -218,13 +219,10 @@ LOGFILE_COUNT = 3
 LOGLEVEL = getenv("DJANGO_LOGLEVEL", "INFO").upper()
 
 
-LOGGING = {
+logging.config.dictConfig({
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "verbose": {
-          "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-        },
         "console": {
             "format": "%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(message)s",
         },
@@ -233,30 +231,36 @@ LOGGING = {
         "console": {
             "class": "logging.StreamHandler",
             "formatter": "console",
-            "level": LOGLEVEL,
-        },
-        "logfile": {
-            # "class": "logging.handlers.TimeRotatingFileHandler",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": LOGFILE_NAME,
-            "maxBytes": LOGFILE_SIZE,
-            "backupCount": LOGFILE_COUNT,
-            "formatter": "verbose",
-            "level": LOGLEVEL,
+            # "level": LOGLEVEL,
         },
     },
-    "root": {
-        "handlers": [
-            "console",
-            "logfile",
-        ],
-        "level": LOGLEVEL,
-    },
+    # "logfile": {
+    #     # "class": "logging.handlers.TimeRotatingFileHandler",
+    #     "class": "logging.handlers.RotatingFileHandler",
+    #     "filename": LOGFILE_NAME,
+    #     "maxBytes": LOGFILE_SIZE,
+    #     "backupCount": LOGFILE_COUNT,
+    #     "formatter": "verbose",
+    #     "level": LOGLEVEL,
+    #     },
+    # },
+    # "root": {
+    #     "handlers": [
+    #         "console",
+    #         "logfile",
+    #     ],
+    #     "level": LOGLEVEL,
+    # },
     "loggers": {
-        "django.db.backends": {
-            "handlers": ["console", "logfile"],
+        "": {
+            # "django.db.backends": {
             "level": LOGLEVEL,
-            "propagate": False,
+            "handlers": [
+                "console",
+                # "logfile"
+            ],
+            # "propagate": False,
+            # }
         },
     },
-}
+})

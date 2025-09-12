@@ -1,0 +1,207 @@
+2025-09-12 12:11:48,057 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2025-09-12 12:13:49,072 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2025-09-12 12:13:52,603 [ERROR] django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'djdt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 145, in __call__
+    return self._postprocess(request, response, toolbar)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 187, in _postprocess
+    rendered = toolbar.render_toolbar()
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/toolbar.py", line 93, in render_toolbar
+    return render_to_string("debug_toolbar/base.html", context)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/test/utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'djdt' is not a registered namespace
+2025-09-12 12:13:52,841 [ERROR] django.request: Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'djdt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 145, in __call__
+    return self._postprocess(request, response, toolbar)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 187, in _postprocess
+    rendered = toolbar.render_toolbar()
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/toolbar.py", line 93, in render_toolbar
+    return render_to_string("debug_toolbar/base.html", context)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/test/utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'djdt' is not a registered namespace
+2025-09-12 12:13:56,566 [ERROR] django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'djdt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 145, in __call__
+    return self._postprocess(request, response, toolbar)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 187, in _postprocess
+    rendered = toolbar.render_toolbar()
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/toolbar.py", line 93, in render_toolbar
+    return render_to_string("debug_toolbar/base.html", context)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/test/utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'djdt' is not a registered namespace
+2025-09-12 12:13:56,583 [ERROR] django.request: Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'djdt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 145, in __call__
+    return self._postprocess(request, response, toolbar)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/middleware.py", line 187, in _postprocess
+    rendered = toolbar.render_toolbar()
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/debug_toolbar/toolbar.py", line 93, in render_toolbar
+    return render_to_string("debug_toolbar/base.html", context)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/test/utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/wiera/PycharmProjects/Python_Basic/Django_1/.venv/lib/python3.13/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'djdt' is not a registered namespace
+2025-09-12 12:14:13,046 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
