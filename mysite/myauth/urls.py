@@ -18,7 +18,6 @@ from myauth.views import (
 app_name = "myauth"
 
 urlpatterns = [
-    # path("login/", login_view, name="login"),
     path(
         "login/", LoginView.as_view(
             template_name="myauth/login.html",
