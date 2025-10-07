@@ -43,13 +43,13 @@ SECRET_KEY = getenv(
 DEBUG = getenv("DJANGO_DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
     "0.0.0.0",
-    "127.0.0.1"
 ] + getenv("DJANGO_ALLOWED_HOST", "").split(",")
 
 INTERNAL_IPS = [
     "127.0.0.1",
-    "localhost",
+    "0.0.0.0",
 ]
 
 if DEBUG:
@@ -216,7 +216,7 @@ LOGFILE_NAME = BASE_DIR / "log.txt"
 LOGFILE_SIZE = 1 * 1024 * 1024
 LOGFILE_COUNT = 3
 
-LOGLEVEL = getenv("DJANGO_LOGLEVEL", "INFO").upper()
+LOGLEVEL = getenv("DJANGO_LOGLEVEL", "info").upper()
 
 
 logging.config.dictConfig({
@@ -231,36 +231,14 @@ logging.config.dictConfig({
         "console": {
             "class": "logging.StreamHandler",
             "formatter": "console",
-            # "level": LOGLEVEL,
         },
     },
-    # "logfile": {
-    #     # "class": "logging.handlers.TimeRotatingFileHandler",
-    #     "class": "logging.handlers.RotatingFileHandler",
-    #     "filename": LOGFILE_NAME,
-    #     "maxBytes": LOGFILE_SIZE,
-    #     "backupCount": LOGFILE_COUNT,
-    #     "formatter": "verbose",
-    #     "level": LOGLEVEL,
-    #     },
-    # },
-    # "root": {
-    #     "handlers": [
-    #         "console",
-    #         "logfile",
-    #     ],
-    #     "level": LOGLEVEL,
-    # },
     "loggers": {
         "": {
-            # "django.db.backends": {
             "level": LOGLEVEL,
             "handlers": [
                 "console",
-                # "logfile"
             ],
-            # "propagate": False,
-            # }
         },
     },
 })
