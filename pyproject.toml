@@ -3,6 +3,9 @@ name = "permissions"
 version = "0.1.0"
 description = ""
 authors = ["Wiera1 <mr.veziryan1@yandex.ru>"]
+#packages = [
+#    {include = "permissions"}
+#]
 
 [tool.poetry.dependencies]
 python = ">=3.13"
