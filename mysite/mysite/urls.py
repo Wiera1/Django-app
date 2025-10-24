@@ -22,7 +22,6 @@ from django.contrib.sitemaps.views import sitemap
 
 from .sitemaps import sitemaps
 
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
