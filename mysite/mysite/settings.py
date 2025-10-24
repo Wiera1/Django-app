@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
 
-    'debug_toolbar',
+    #'debug_toolbar',
     'rest_framework',
     'django_filters',
     'drf_spectacular',
@@ -99,7 +99,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+   # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 

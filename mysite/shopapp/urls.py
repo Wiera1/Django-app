@@ -1,14 +1,11 @@
 from django.urls import path, include
-from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps.views import sitemap
 from shopapp.sitemap import ShopSitemap
 
 from rest_framework.routers import DefaultRouter
 
-from . import views
 from .views import (
     ShopIndexView,
-    # GroupListView,
     ProductDetailsView,
     ProductsListView,
     OrderDetailView,
@@ -17,7 +14,6 @@ from .views import (
     ProductUpdateView,
     ProductDeleteView,
     ProductsDataExportView,
-    OrdersExportView,
     ProductViewSet,
     OrdersViewSet,
     LatestProductsFeed,
